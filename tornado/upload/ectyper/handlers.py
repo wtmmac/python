@@ -1,5 +1,5 @@
 from errno import EEXIST
-from magick import ImageMagick, is_remote
+from ectyper.magick import ImageMagick, is_remote
 import logging
 import os
 from random import randint

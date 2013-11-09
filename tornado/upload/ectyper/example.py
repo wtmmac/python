@@ -1,5 +1,5 @@
 import hashlib
-from handlers import ImageHandler, FileCachingImageHandler
+from ectyper.handlers import ImageHandler, FileCachingImageHandler
 import logging
 import os
 from tornado import httpclient, ioloop, web
@@ -76,12 +76,12 @@ class StreamLocal(ImageHandler):
     """
     
     def handler(self, *args):
-        self.convert_image(os.path.join("upload", args[0]))
+        self.convert_image(os.path.join("images", args[0]))
 
 application = web.Application([
     ('/recent_flickr', FlickrExample),
     ('/gravatar/(.*)', GravatarCacheExample),
-    ('/upload/(.*)', StreamLocal),
+    ('/images/(.*)', StreamLocal),
 ])
 
 if __name__ == "__main__":
