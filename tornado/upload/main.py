@@ -28,9 +28,6 @@ class UploadHandler(tornado.web.RequestHandler):
             self.write('{"status":200, "file":"%s"}' % os.path.join(uploadPath, fileName))
 
 settings = {
-    "cookie_secret": "61oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=",
-    "login_url": "/login",
-    "xsrf_cookies": False,
     "debug": True,
 }
 
