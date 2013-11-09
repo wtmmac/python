@@ -19,7 +19,7 @@ class UploadHandler(tornado.web.RequestHandler):
             uploadRealPath = os.path.join(APP_ROOT, "upload", uploadPath)
             try:
                 os.makedirs(uploadRealPath)
-            except Exception, e:
+            except Exception:
                 pass
             uploadRealFilePath = os.path.join(uploadRealPath, fileName)
             uploadedFile = open(uploadRealFilePath, "w")
