@@ -15,7 +15,7 @@ class UploadHandler(tornado.web.RequestHandler):
     def post(self):  
         if self.request.files:  
             uploadFile = self.request.files['myfile'][0]
-            fileName =  time.strftime("%Y%m%d%H%M%S") + '%d' % datetime.datetime.now().microsecond + '.' + uploadFile["filename"].split('.', 1)[1] 
+            fileName =  time.strftime("%Y%m%d%H%M%S") + '%d' % datetime.datetime.now().microsecond + '.' + uploadFile["filename"].split('.')[-1].lower() 
             fin = open(os.path.join(APP_ROOT, "upload", fileName),"w")    
             fin.write(uploadFile["body"])  
             fin.close()
