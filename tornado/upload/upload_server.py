@@ -11,7 +11,9 @@ class MainHandler(tornado.web.RequestHandler):
         self.render(os.path.join(APP_ROOT, 'index.html'))
   
 class UploadHandler(tornado.web.RequestHandler):
-    def post(self):  
+    def post(self):
+        # Permission check
+  
         if self.request.files:  
             uploadFile = self.request.files['upload_image'][0]
             fileName =  time.strftime("%Y%m%d%H%M%S") + '%d' % datetime.datetime.now().microsecond + '.' + uploadFile["filename"].split('.')[-1].lower()
