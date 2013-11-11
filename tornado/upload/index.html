@@ -1,11 +1,6 @@
-{% extends 'base.html' %}
-
-{% block title %}aaa{% end %}
-
-{% block content %}
 <form action="/upload" enctype="multipart/form-data" method="post">  
-<input name="upload_image" type="file">  
+<input name="upload_image" type="file"> 
+<input name="sign" type="hidden" value={{ params["sign"]}}> 
+<input name="time" type="hidden" value={{ params["time"]}}> 
 <input type="submit" value="Submit">  
-{{xsrf_form_html()}}
 </form>
-{% end %}

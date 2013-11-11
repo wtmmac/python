@@ -10,8 +10,13 @@ APP_ROOT = os.path.dirname(__file__)
 secret_key = "secret_key"
 
 class MainHandler(tornado.web.RequestHandler):
-    def get(self):  
-        self.render(os.path.join(APP_ROOT, 'index.html'))
+    """
+    Web page demo
+    """
+    def get(self):
+        timestamp = int(time.time()).__str__()
+        params = {"sign":hashlib.md5(secret_key + timestamp).hexdigest().upper(), "time":timestamp}
+        self.render(os.path.join(APP_ROOT, 'index.html'), params=params)
   
 class UploadHandler(tornado.web.RequestHandler):
     def post(self):
