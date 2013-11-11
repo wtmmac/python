@@ -2,9 +2,12 @@
 # coding=utf-8
 import tornado.ioloop
 import tornado.web
-import os, datetime, time
+import os, datetime, time, hashlib
 
 APP_ROOT = os.path.dirname(__file__)
+
+# 密钥
+secret_key = "secret_key"
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):  
@@ -13,10 +16,13 @@ class MainHandler(tornado.web.RequestHandler):
 class UploadHandler(tornado.web.RequestHandler):
     def post(self):
         # Permission check
-  
-        if self.request.files:  
+        sign = self.get_argument("sign")
+        timestamp = self.get_argument("time")
+        if hashlib.md5(secret_key + timestamp).hexdigest().upper() != sign:
+            self.write("sign error")
+        elif self.request.files:  
             uploadFile = self.request.files['upload_image'][0]
-            fileName =  time.strftime("%Y%m%d%H%M%S") + '%d' % datetime.datetime.now().microsecond + '.' + uploadFile["filename"].split('.')[-1].lower()
+            fileName =  time.strftime("%H%M%S") + '%d' % datetime.datetime.now().microsecond + '.' + uploadFile["filename"].split('.')[-1].lower()
             uploadPath = time.strftime("%Y/%m/%d")
             uploadRealPath = os.path.join(APP_ROOT, "upload", uploadPath)
             try:
@@ -28,6 +34,7 @@ class UploadHandler(tornado.web.RequestHandler):
             uploadedFile.write(uploadFile["body"])
             uploadedFile.close()
             self.write('{"status":200, "file":"%s"}' % os.path.join(uploadPath, fileName))
+            
 
 settings = {
     "debug": True,
