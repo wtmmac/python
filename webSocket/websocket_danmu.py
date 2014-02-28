@@ -66,7 +66,7 @@ def main():
         ('/rev', ReceiveHandler)
     ], **settings)
     http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(8000)
+    http_server.listen(8080)
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == '__main__':
