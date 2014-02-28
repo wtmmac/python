@@ -41,15 +41,13 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         ChatSocketHandler.socket_handlers.add(self)
-        send_message('A new user has entered the chat room.', None)
+        #send_message('A new user has entered the chat room.', None)
 
     def on_close(self):
         ChatSocketHandler.socket_handlers.remove(self)
-        send_message('A user has left the chat room.', None)
+        #send_message('A user has left the chat room.', None)
 
     def on_message(self, message):
-        if "u:" in message:
-            self.uid = message
         send_message(message, None)
 
 
