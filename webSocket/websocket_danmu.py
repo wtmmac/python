@@ -47,7 +47,8 @@ def main(port):
     application = tornado.web.Application([
         ('/', MainHandler),
         ('/new-msg/', ChatSocketHandler),
-        ('/new-msg/socket', ChatSocketHandler)
+        ('/new-msg/socket', ChatSocketHandler),
+        (r"/(crossdomain\.xml)", tornado.web.StaticFileHandler, dict(path=settings['static_path'])),
     ], **settings)
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(port)
