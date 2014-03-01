@@ -5,7 +5,7 @@
 	var WebSocket = window.WebSocket || window.MozWebSocket;
 	if (WebSocket) {
 		try {
-			var socket = new WebSocket('ws://10.155.103.11:8080/new-msg/socket');
+			var socket = new WebSocket('ws://10.155.103.11:7000/new-msg/socket');
 		} catch (e) {}
 	}
 

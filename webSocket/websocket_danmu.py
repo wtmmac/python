@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 import logging
 import os.path
+import sys
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
@@ -37,7 +38,7 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
         send_message(message, None)
 
 
-def main():
+def main(port):
     settings = {
         'template_path': os.path.join(os.path.dirname(__file__), 'templates'),
         'static_path': os.path.join(os.path.dirname(__file__), 'static'),
@@ -49,8 +50,8 @@ def main():
         ('/new-msg/socket', ChatSocketHandler)
     ], **settings)
     http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(8080)
+    http_server.listen(port)
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == '__main__':
-    main()
+    main(int(sys.argv[1]))
