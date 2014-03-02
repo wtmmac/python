@@ -9,9 +9,9 @@ import tornado.options
 import tornado.web
 import tornado.websocket
 
-DEBUG = True
+DEBUG = False 
 
-def send_message(message, uid=None):
+def send_message(message):
     for handler in ChatSocketHandler.socket_handlers:
         try:
             handler.write_message(message)
@@ -26,16 +26,15 @@ class MainHandler(tornado.web.RequestHandler):
 class ChatSocketHandler(tornado.websocket.WebSocketHandler):
     socket_handlers = set()
 
-    uid = None
-
     def open(self):
         ChatSocketHandler.socket_handlers.add(self)
+        logging.error('login')
 
     def on_close(self):
         ChatSocketHandler.socket_handlers.remove(self)
 
     def on_message(self, message):
-        send_message(message, None)
+        send_message(message)
 
 
 def main(port):
@@ -46,7 +45,6 @@ def main(port):
     }
     application = tornado.web.Application([
         ('/', MainHandler),
-        ('/new-msg/', ChatSocketHandler),
         ('/new-msg/socket', ChatSocketHandler),
         (r"/(crossdomain\.xml)", tornado.web.StaticFileHandler, dict(path=settings['static_path'])),
     ], **settings)
